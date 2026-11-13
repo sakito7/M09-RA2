@@ -1,6 +1,9 @@
 public class Fil extends Thread {
-    public Fil (String nom) {
+    private boolean esticte;
+
+    public Fil (String nom, boolean esticte) {
         super(nom);
+        this.esticte = esticte;
     }
 
     @Override
@@ -11,10 +14,12 @@ public class Fil extends Thread {
             }
 
             System.out.println(getName() + " " + i);
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException ex) {
-                System.getLogger(Fil.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            if (esticte) {
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException ex) {
+                    System.getLogger(Fil.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                }
             }
         }
 
