@@ -1,3 +1,4 @@
+package src;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -23,13 +24,14 @@ public class Futbolista extends Thread {
     public void run() {
         for (int i = 0; i < NUM_TIRADES; i++) {
             Random rnd = new Random();
-            float valor = rnd.nextInt(1);
+            float valor = rnd.nextFloat(1);
 
             if (valor >= PROBABILITAT) {
                 nGols++;
             }
             nTirades++;
         }
+        
     }
 
     public int getnGols() {
@@ -50,7 +52,7 @@ public class Futbolista extends Thread {
 
     @Override
     public String toString() {
-        return super.toString();
+        return super.getName();
     }
 
 
@@ -62,19 +64,15 @@ public class Futbolista extends Thread {
         List<Futbolista> lf = new ArrayList<Futbolista>();
 
         for (int i = 0; i < NUM_JUGADORS; i++) {
-            lf.add(new Futbolista("Futbolista " + (i + 1)));
-        }
-
-        if (noms.length != lf.size()) {
-            throw new IllegalArgumentException("El número de nombres no coincideix");
+            lf.add(new Futbolista(noms[i]));
         }
 
         for (Futbolista futbolista : lf) {
-            futbolista.join();
+            futbolista.run();
         }
 
         for (Futbolista futbolista : lf) {
-            System.out.println(futbolista);
+            System.out.printf("%-8s -> %2d gols%n", futbolista.getName(), futbolista.getnGols());
         }
     }
     
